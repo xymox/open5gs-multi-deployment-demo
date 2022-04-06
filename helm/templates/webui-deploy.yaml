@@ -88,3 +88,7 @@ spec:
           value: "production"  
         - name: HOSTNAME
           value: '0.0.0.0'
+        - name: ADMIN_USER
+          value: phuet
+        - name: ADMIN_PASSWORD
+          value: bobleponge

@@ -13,7 +13,7 @@ data:
       sbi:   
       - dev: eth0
         port: 8099
-        advertise: open5gs-udm
+        # advertise: open5gs-udm
     nrf:
      sbi:
       name: open5gs-nrf

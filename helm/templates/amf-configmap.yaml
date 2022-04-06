@@ -14,7 +14,7 @@ data:
         sbi:
           - dev: eth0
             port: 8099
-            advertise: open5gs-amf
+            # advertise: open5gs-amf
         ngap:
           dev: {{ .Values.k8s.interface }}
         guami:

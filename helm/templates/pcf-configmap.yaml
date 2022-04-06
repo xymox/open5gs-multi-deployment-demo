@@ -15,7 +15,7 @@ data:
       sbi:     
       - dev: eth0
         port: 8099
-        advertise: open5gs-pcf
+        # advertise: open5gs-pcf
     nrf:
      sbi:
       name: open5gs-nrf 
