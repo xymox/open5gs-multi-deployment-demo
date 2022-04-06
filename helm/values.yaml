@@ -6,7 +6,7 @@ open5gs:
   image:
     repository: quay.io/xymox/open5gs-ubi8
     pullPolicy: Always
-    tag: "latest"
+    tag: "v2.2.6-11-g27285a6"
   logger:
     level: info
   network: 10.45.0.1/16
