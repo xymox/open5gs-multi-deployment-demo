@@ -1,0 +1,10 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  annotations:
+    apps.open-cluster-management.io/reconcile-rate: medium
+  name: open5gs-multi-deployment-demo-open5gs
+  namespace: open5gs-demo-acm
+spec:
+  pathname: https://xymox.github.io/open5gs-multi-deployment-demo/open5gs/
+  type: HelmRepo

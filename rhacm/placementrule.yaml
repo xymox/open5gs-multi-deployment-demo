@@ -1,0 +1,11 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  labels:
+    app: open5gs-demo-acm
+  name: open5gs-demo-acm-placement
+  namespace: open5gs-demo-acm
+spec:
+  clusterSelector:
+    matchLabels:
+      type: 5gcore
