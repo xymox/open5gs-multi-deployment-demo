@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: open5gs-smf-config
+  labels:
+    epc-mode: smf
+data:
+  smf.yaml: |
+    logger:
+      level: {{ .Values.open5gs.logger.level }}
+
+    parameter:
+        no_ipv6: true
+
+    smf:
+        sbi:     
+        - dev: eth0
+          port: 8099
+          advertise: open5gs-smf
+        pfcp:
+           dev: {{ .Values.k8s.interface }}
+        gtpc:
+          dev: {{ .Values.k8s.interface }}
+        gtpu:
+          dev: {{ .Values.k8s.interface }}    
+        subnet:
+         - addr: {{ .Values.open5gs.network }}
+           dnn: {{ .Values.dnn }}
+        dns:
+          - 8.8.8.8
+          - 8.8.4.4
+        mtu: 1400
+
+    nrf:
+     sbi:
+      name: open5gs-nrf 
+      port: 8099
+
+    upf:
+      pfcp:
+        - name: upf-open5gs
+          dnn: {{ .Values.dnn }}

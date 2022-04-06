@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: open5gs-udm-config
+  labels:
+    epc-mode: udm
+data:
+  udm.yaml: |
+    logger:
+      level: {{ .Values.open5gs.logger.level }}
+
+    udm:
+      sbi:   
+      - dev: eth0
+        port: 8099
+        advertise: open5gs-udm
+    nrf:
+     sbi:
+      name: open5gs-nrf
+      port: 8099
