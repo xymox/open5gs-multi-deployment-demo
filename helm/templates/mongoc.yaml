@@ -39,11 +39,6 @@ spec:
             secretKeyRef:
               name: database-secret-config
               key: admin-password
-        - name: MONGODB_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: database-secret-config
-              key: dbname
         - name: MONGODB_USER
           valueFrom:
             secretKeyRef:
