@@ -1,0 +1,40 @@
+#!/usr/bin/env ansible-playbook
+---
+# file: configure-env.yaml
+- hosts: localhost
+  become: False
+
+  vars:
+    service_account: bobleponge
+    namespace: blublu12
+    node_role: worker-5g
+
+  tasks:
+
+  - name: Add privileged scc to service account {{ service_account }}
+    command: "oc adm policy add-scc-to-user privileged -z {{ service_account }} -n {{ namespace }}"
+    tags:
+    - never
+    - update-sa
+  
+  - name: Restart pod
+    command: "oc -n {{ namespace }} rollout restart deploy open5gs-amf-deployment"
+    tags:
+    - never
+    - update-sa
+  
+  - name: Patch deploy to use nodeSelector
+    command: |
+      oc -n {{ namespace }} patch deploy open5gs-amf-deployment --type=merge -p {{ json_patch }}
+    vars:
+      json_patch: !unsafe "'{\"spec\":{\"template\":{\"spec\":{\"nodeSelector\":{\"node-role.kubernetes.io/worker-5g\":\"\"}}}}}'"
+    tags:
+    - never
+    - patch-deployment
+  
+  - name: Restart pod
+    command: "oc -n {{ namespace }} rollout restart deploy open5gs-upf-deployment"
+    tags:
+    - never
+    - update-sa
+  
