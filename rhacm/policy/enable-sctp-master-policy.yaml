@@ -1,0 +1,51 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: enable-sctp-master
+  namespace: open5gs-demo-acm
+spec:
+  disabled: false
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: enable-sctp-master-mc
+      spec:
+        namespaceSelector:
+          exclude:
+          - kube-*
+          include:
+          - default
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: machineconfiguration.openshift.io/v1
+            kind: MachineConfig
+            metadata:
+              labels:
+                machineconfiguration.openshift.io/role: master
+              name: 50-master-enable-sctp
+            spec:
+              config:
+                ignition:
+                  version: 3.2.0
+                storage:
+                  files:
+                  - contents:
+                      source: data:,
+                      verification: {}
+                    filesystem: root
+                    mode: 420
+                    overwrite: true
+                    path: /etc/modprobe.d/sctp-blacklist.conf
+                  - contents:
+                      source: data:,sctp
+                      verification: {}
+                    filesystem: root
+                    mode: 420
+                    overwrite: true
+                    path: /etc/modules-load.d/sctp-load.conf
+        remediationAction: inform
+        severity: low
+  remediationAction: enforce

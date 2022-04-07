@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# commonAnnotations:
+#   demo: open5gs
+
+commonLabels:
+  demo: open5gs
+
+resources:
+- namespace.yaml
+- enable-sctp-master-policy.yaml
+- enable-sctp-worker-policy.yaml
+- enable-sctp-placementbinding.yaml
+- enable-sctp-placementrule.yaml
