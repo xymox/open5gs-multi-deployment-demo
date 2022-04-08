@@ -1,0 +1,52 @@
+#!/usr/bin/env ansible-playbook
+---
+- hosts: localhost
+  become: False
+
+  vars:
+    git_repo: https://github.com/xymox/open5gs-multi-deployment-demo.git
+    ACTION: apply
+
+  tasks:
+  - block:
+    - name: Create tmp directory to store OpenShift binaries
+      tempfile:
+        state: directory
+        suffix: "gitrepo"
+      changed_when: False
+      register: tempdiroutput
+      tags:
+      - always
+  
+    - name: Set fact for tmp directory
+      set_fact:
+        tempdir: "{{ tempdiroutput.path }}"
+      tags:
+      - always
+  
+    - name: Clone application repo for installation
+      ansible.builtin.git:
+        repo: "{{ git_repo }}"
+        dest: "{{ tempdir }}/gitrepo"
+        depth: 1
+      register: gitrepo
+      tags:
+      - never
+      - application
+  
+    - name: Install application
+      command: "oc {{ ACTION }} -k ."
+      args:
+        chdir: "{{ tempdir }}/gitrepo/rhacm/gitops"
+      tags:
+      - never
+      - application
+
+    always:
+    - name: Remove {{ tempdir }}
+      file:
+        name: "{{ tempdir }}"
+        state: absent
+      changed_when: False
+      tags:
+      - always
