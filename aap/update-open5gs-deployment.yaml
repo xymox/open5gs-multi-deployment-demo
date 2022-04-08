@@ -25,9 +25,9 @@
   
   - name: Patch deploy to use nodeSelector
     command: |
-      oc -n {{ namespace }} patch deploy open5gs-amf-deployment --type=merge -p {{ json_patch }}
+      oc -n {{ namespace }} patch deploy open5gs-amf-deployment --type=json --patch {{ json_patch }}
     vars:
-      json_patch: !unsafe "'{\"spec\":{\"template\":{\"spec\":{\"nodeSelector\":{\"node-role.kubernetes.io/worker-5g\":\"\"}}}}}'"
+      json_patch: !unsafe "'[{\"op\": \"replace\", \"path\": \"/spec/template/spec/nodeSelector\", \"value\": {\"node-role.kubernetes.io/worker-5g\": \"\"}}]'"
     tags:
     - never
     - patch-deployment
