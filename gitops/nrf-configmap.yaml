@@ -1,0 +1,42 @@
+---
+# Source: open5gs-5gcore-helm/templates/nrf-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: open5gs-nrf-config
+  labels:
+    epc-mode: nrf
+data:
+  nrf.yaml: |
+    logger:
+      level: info
+
+    nrf:
+      sbi:
+      - dev: eth0
+        port: 8099
+
+    amf:
+      sbi:
+      - name: open5gs-amf
+        port: 8099
+
+    ausf:
+      sbi:
+        name: open5gs-ausf
+        port: 8099
+
+    smf:
+      sbi:
+        name: open5gs-smf
+        port: 8099
+
+    pcf:
+      sbi:
+        name: open5gs-pcf
+        port: 8099
+
+    udm:
+      sbi:
+        name: open5gs-udm
+        port: 8099

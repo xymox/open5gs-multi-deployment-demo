@@ -1,0 +1,26 @@
+---
+# Source: open5gs-5gcore-helm/templates/nssf-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: open5gs-nssf-config
+  labels:
+    epc-mode: nssf
+data:
+  nssf.yaml: |
+    logger:
+      level: info
+
+    nssf:
+      sbi:     
+      - dev: eth0
+        port: 8099
+      nsi:
+      - addr: open5gs-nrf
+        port: 8099
+        s_nssai:
+          sst: 1        
+    nrf:
+     sbi:
+      name: open5gs-nrf
+      port: 8099

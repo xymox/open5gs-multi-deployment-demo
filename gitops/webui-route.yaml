@@ -1,0 +1,15 @@
+---
+# Source: open5gs-5gcore-helm/templates/webui-route.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: open5gs-webui
+spec:
+  port:
+    targetPort: 3000
+  to:
+    kind: Service
+    name: open5gs-webui
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

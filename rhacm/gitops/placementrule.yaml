@@ -7,5 +7,5 @@ metadata:
   namespace: open5gs-demo-acm
 spec:
   clusterSelector:
-    matchLabels:
-      type: 5gcore
+    matchExpressions:
+      - {key: 5g, operator: In, values: ["true", "maybe"]}

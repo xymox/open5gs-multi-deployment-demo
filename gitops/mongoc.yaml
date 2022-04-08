@@ -1,0 +1,57 @@
+---
+# Source: open5gs-5gcore-helm/templates/mongoc.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open5gs-mongoc
+spec:
+  selector:
+    matchLabels:
+      app: open5gs-mongoc
+  template:
+    metadata:
+      labels:
+        app: open5gs-mongoc
+    spec:
+      serviceAccountName: 5gcore
+      containers:
+      - image: registry.redhat.io/rhscl/mongodb-36-rhel7
+        name: open5gs-mongoc
+        args:
+        - sh
+        - -c
+        - sleep 60; sh /run/open5gs-dbctl add 208930000000001 465B5CE8B199B49FAA5F0A2EE238A6BC E8ED289DEBA952E4283B54E88E6183CA ; sleep infinity
+        volumeMounts:
+        - name: open5gs-dbctl-script
+          mountPath: /run/open5gs-dbctl
+          subPath: "open5gs-dbctl"
+        env:
+        - name: MONGODB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: dbname
+        - name: MONGODB_ADMIN_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: admin-username
+        - name: MONGODB_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: admin-password
+        - name: MONGODB_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: username
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: password
+      volumes:
+        - name: open5gs-dbctl-script
+          configMap:
+            name: open5gs-dbctl-script

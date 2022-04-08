@@ -1,0 +1,52 @@
+---
+# Source: open5gs-5gcore-helm/templates/nssf-deploy.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: open5gs-nssf
+  labels:
+    epc-mode: nssf
+spec:
+  selector:
+    epc-mode: nssf
+  ports:
+    - protocol: TCP
+      port: 8099
+      targetPort: http2
+---
+# Source: open5gs-5gcore-helm/templates/nssf-deploy.yaml
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: open5gs-nssf-deployment  
+  labels:
+    epc-mode: nssf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      epc-mode: nssf
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        epc-mode: nssf
+    spec:   
+      serviceAccountName: 5gcore
+      containers:
+        - name: nssf
+          image: "quay.io/xymox/open5gs-ubi8:latest"
+          imagePullPolicy: Always
+          command: ["open5gs-nssfd", "-c", "/open5gs/config-map/nssf.yaml"]
+          ports:
+          - containerPort: 8099
+            name: http2
+          volumeMounts:
+          - name: open5gs-nssf-config
+            mountPath: /open5gs/config-map/nssf.yaml
+            subPath: "nssf.yaml"          
+      volumes:
+        - name: open5gs-nssf-config
+          configMap:
+            name: open5gs-nssf-config

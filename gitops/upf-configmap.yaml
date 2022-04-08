@@ -1,0 +1,22 @@
+---
+# Source: open5gs-5gcore-helm/templates/upf-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: open5gs-upf-config
+  labels:
+    epc-mode: upf
+data:
+  upf.yaml: |
+    logger:
+      level: info
+
+    upf:
+        pfcp:
+           dev: eth0
+        gtpu:
+           dev: eth0
+        subnet:
+          - addr: 10.45.0.1/16
+            dev: ogstun
+            dnn: internet

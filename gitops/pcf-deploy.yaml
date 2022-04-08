@@ -1,0 +1,97 @@
+---
+# Source: open5gs-5gcore-helm/templates/pcf-deploy.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: open5gs-pcf
+  labels:
+    epc-mode: pcf
+spec:
+  selector:
+    epc-mode: pcf
+  ports:
+    - protocol: TCP
+      port: 8099
+      targetPort: http2
+---
+# Source: open5gs-5gcore-helm/templates/pcf-deploy.yaml
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: open5gs-pcf-deployment
+  labels:
+    epc-mode: pcf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      epc-mode: pcf
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        epc-mode: pcf
+    spec:    
+      serviceAccountName: 5gcore
+      initContainers:
+      - args:
+        - sh
+        - -c
+        - cat /initconfig/pcf.yaml | envsubst > /config/pcf.yaml
+        image: quay.io/xymox/envsubst:ubi
+        name: envsubst
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: MONGODB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: dbname
+        - name: MONGODB_ADMIN_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: admin-username
+        - name: MONGODB_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: admin-password
+        - name: MONGODB_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: username
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: password
+        volumeMounts:
+        - name: open5gs-pcf-initconfig
+          mountPath: /initconfig/pcf.yaml
+          subPath: "pcf.yaml"          
+        - name: open5gs-pcf-config
+          mountPath: /config
+      containers:
+        - name: pcf
+          image: "quay.io/xymox/open5gs-ubi8:latest"
+          imagePullPolicy: Always
+          command: ["open5gs-pcfd", "-c", "/open5gs/config-map/pcf.yaml"]
+          volumeMounts:
+          - name: open5gs-pcf-config
+            mountPath: /open5gs/config-map/pcf.yaml
+            subPath: "pcf.yaml"          
+          ports:
+          - containerPort: 8099
+            name: http2
+      volumes:
+        - name: open5gs-pcf-config
+          emptyDir: {}
+        - name: open5gs-pcf-initconfig
+          configMap:
+            name: open5gs-pcf-config

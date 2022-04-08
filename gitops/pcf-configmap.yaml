@@ -1,0 +1,24 @@
+---
+# Source: open5gs-5gcore-helm/templates/pcf-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: open5gs-pcf-config
+  labels:
+    epc-mode: pcf
+data:
+  pcf.yaml: |
+    logger:
+      level: info
+    
+    db_uri: mongodb://${MONGODB_ADMIN_USER}:${MONGODB_ADMIN_PASSWORD}@mongodb-svc/admin
+
+    pcf:
+      sbi:     
+      - dev: eth0
+        port: 8099
+        # advertise: open5gs-pcf
+    nrf:
+     sbi:
+      name: open5gs-nrf 
+      port: 8099
