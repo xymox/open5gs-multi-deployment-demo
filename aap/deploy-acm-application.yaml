@@ -5,6 +5,7 @@
 
   vars:
     git_repo: https://github.com/xymox/open5gs-multi-deployment-demo.git
+    application_mode: gitops
     ACTION: apply
 
   tasks:
@@ -37,7 +38,7 @@
     - name: Install application
       command: "oc {{ ACTION }} -k ."
       args:
-        chdir: "{{ tempdir }}/gitrepo/rhacm/gitops"
+        chdir: "{{ tempdir }}/gitrepo/rhacm/{{ application_mode }}"
       tags:
       - never
       - application
