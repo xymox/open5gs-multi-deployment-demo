@@ -50,6 +50,8 @@ spec:
       labels:
         epc-mode: amf
     spec:    
+      nodeSelector:
+        node-role.kubernetes.io/worker: '' 
       serviceAccountName: 5gcore
       containers:
         - name: amf
