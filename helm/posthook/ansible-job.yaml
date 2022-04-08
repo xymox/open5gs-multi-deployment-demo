@@ -1,0 +1,14 @@
+---
+apiVersion: tower.ansible.com/v1alpha1
+kind: AnsibleJob
+metadata:
+  name: ansible-posthook-open5gs-demo-acm-gitops
+  labels:
+    app.kubernetes.io/name: open5gs-demo-acm-gitops
+  generateName: open5gs-demo-acm-gitops-job-
+spec:
+  extra_vars:
+    app_namespace: open5gs-demo-acm
+    service_account: 5gcore
+  job_template_name: Update open5gs deployment
+  tower_auth_secret: aap-cred-2
