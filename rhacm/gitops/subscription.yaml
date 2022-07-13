@@ -14,7 +14,7 @@ spec:
   # hooksecretref:
   #   name: aap-cred-2
   channel: open5gs-demo-acm/open5gs-demo-acm-gitops-channel
-  name: open5gs-5gcore-helm
+  name: open5gs-5gcore-gitops
   placement:
     placementRef:
       kind: PlacementRule
