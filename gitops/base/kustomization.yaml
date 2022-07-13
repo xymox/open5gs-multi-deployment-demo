@@ -1,0 +1,31 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  demo: open5gs
+
+resources:
+- amf-configmap.yaml
+- amf-deploy.yaml
+- ausf-configmap.yaml
+- ausf-deploy.yaml
+- mongoc.yaml
+- mongodb-secret.yaml
+- mongodb.yaml
+- nrf-configmap.yaml
+- nrf-deploy.yaml
+- nssf-configmap.yaml
+- nssf-deploy.yaml
+- open5gs-dbctl-configmap.yaml
+- pcf-configmap.yaml
+- pcf-deploy.yaml
+- service-account.yaml
+- smf-configmap.yaml
+- smf-deploy.yaml
+- udm-configmap.yaml
+- udm-deploy.yaml
+- udr-configmap.yaml
+- udr-deploy.yaml
+- webui-deploy.yaml
+- webui-route.yaml
