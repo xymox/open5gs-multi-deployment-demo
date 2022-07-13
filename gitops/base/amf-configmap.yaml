@@ -19,6 +19,7 @@ data:
             # advertise: open5gs-amf
         ngap:
           dev: eth0
+
         guami:
           - plmn_id:
               mcc: 208

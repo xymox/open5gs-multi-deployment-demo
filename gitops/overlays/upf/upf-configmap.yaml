@@ -15,7 +15,9 @@ data:
         pfcp:
            dev: net1
         gtpu:
-           dev: net1
+           dev: eth0
+           advertise: upf-gtpu-open5gs.open5gs-demo-acm-upf.svc.cluster.local
+           port: 2152
         subnet:
           - addr: 10.45.0.1/16
             dev: ogstun
