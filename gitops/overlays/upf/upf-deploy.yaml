@@ -33,7 +33,7 @@ spec:
       labels:
         epc-mode: upf
     spec:   
-      serviceAccountName: 5gcore
+      serviceAccountName: 5gcore-upf
       containers:
         - name: upf
           securityContext:

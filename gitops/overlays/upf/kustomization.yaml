@@ -4,7 +4,10 @@ kind: Kustomization
 
 resources:
 - namespace-upf.yaml
+- upf-service-account.yaml
 - upf-configmap.yaml
 - upf-deploy.yaml
+- upf-privileged-rolebinding.yaml
+- upf-privileged-role.yaml
 
 namespace: open5gs-demo-acm-upf
