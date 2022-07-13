@@ -7,7 +7,7 @@ rules:
 - apiGroups:
   - security.openshift.io 
   resourceNames:
-  - scc-name 
+  - privileged
   resources:
   - securitycontextconstraints 
   verbs: 
