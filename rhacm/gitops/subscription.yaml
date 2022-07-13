@@ -6,8 +6,8 @@ metadata:
     app: open5gs-demo-acm-gitops
     app.kubernetes.io/part-of: open5gs-demo-acm
     apps.open-cluster-management.io/reconcile-rate: medium
-    apps.open-cluster-management.io/git-path: gitops
-    apps.open-cluster-management.io/git-branch: split-ns
+    apps.open-cluster-management.io/github-path: gitops
+    apps.open-cluster-management.io/github-branch: split-ns
   name: open5gs-demo-acm-gitops-subscription
   namespace: open5gs-demo-acm
 spec:
