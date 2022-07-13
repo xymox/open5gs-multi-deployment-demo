@@ -20,11 +20,11 @@ data:
           port: 8099
           # advertise: open5gs-smf
         pfcp:
-           dev: eth0
+           dev: net1
         gtpc:
-          dev: eth0
+          dev: net1
         gtpu:
-          dev: eth0    
+          dev: net1
         subnet:
          - addr: 10.45.0.1/16
            dnn: internet
