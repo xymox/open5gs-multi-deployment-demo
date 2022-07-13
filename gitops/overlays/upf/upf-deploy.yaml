@@ -13,9 +13,11 @@ spec:
     - protocol: UDP
       port: 2152
       targetPort: upf-gtpu-udp
+      name: upf-gtpu-udp
     - protocol: TCP
       port: 2152
       targetPort: upf-gtpu-tcp
+      name: upf-gtpu-tcp
 ---
 # Source: open5gs-5gcore-helm/templates/upf-deploy.yaml
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
