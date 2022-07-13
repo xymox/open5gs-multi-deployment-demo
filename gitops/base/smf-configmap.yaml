@@ -40,5 +40,5 @@ data:
 
     upf:
       pfcp:
-        - addr: 192.168.199.10/30
+        - addr: 192.168.199.10
           dnn: internet
