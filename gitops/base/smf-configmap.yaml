@@ -41,4 +41,5 @@ data:
     upf:
       pfcp:
         - name: upf-open5gs
+          addr: 192.168.199.10/30
           dnn: internet

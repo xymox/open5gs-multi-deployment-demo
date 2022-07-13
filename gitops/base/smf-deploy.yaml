@@ -30,6 +30,12 @@ spec:
     metadata:       
       annotations:
         sidecar.istio.io/inject: "true"
+        k8s.v1.cni.cncf.io/networks: '[
+          {
+            "name": "5g-core-macvlan",
+            "ips": [ "192.168.199.9/30" ]
+          }
+        ]'
       labels:
         epc-mode: smf
     spec:   
