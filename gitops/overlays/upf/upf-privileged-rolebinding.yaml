@@ -10,5 +10,5 @@ roleRef:
   namespace: open5gs-demo-acm-upf
 subjects:
 - kind: ServiceAccount
-  name: 5gcore
+  name: 5gcore-upf
   namespace: open5gs-demo-acm-upf
