@@ -13,9 +13,9 @@ data:
 
     upf:
         pfcp:
-           dev: eth0
+           dev: net1
         gtpu:
-           dev: eth0
+           dev: net1
         subnet:
           - addr: 10.45.0.1/16
             dev: ogstun
