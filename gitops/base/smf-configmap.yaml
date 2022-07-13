@@ -9,7 +9,7 @@ metadata:
 data:
   smf.yaml: |
     logger:
-      level: info
+      level: debug
 
     parameter:
         no_ipv6: true

@@ -9,7 +9,7 @@ metadata:
 data:
   upf.yaml: |
     logger:
-      level: info
+      level: debug
 
     upf:
         pfcp:
