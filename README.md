@@ -1,6 +1,4 @@
 # open5gs-multi-deployment-demo
-# What to use in this mess
-
 
 ## Open5gs multi deployment demo
 
