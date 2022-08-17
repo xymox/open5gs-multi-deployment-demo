@@ -1,0 +1,13 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: network-attachement-config-placement-binding
+placementRef:
+  name: custom-network-placement-rule
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: network-attachment-config-policy
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io

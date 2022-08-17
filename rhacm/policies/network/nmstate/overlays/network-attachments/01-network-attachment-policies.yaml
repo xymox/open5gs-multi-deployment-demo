@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: policy-network-attachment-config
+  name: network-attachment-config-policy
 spec:
   disabled: false
   policy-templates:
@@ -9,7 +9,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: policy-network-attachment-config
+        name: network-attachment-config-policy
       spec:
         namespaceSelector:
           exclude:
@@ -30,7 +30,7 @@ spec:
                   "name": "5g-core-macvlan",
                   "cniVersion": "0.3.1",
                   "type": "macvlan",
-                  "master": "enp8s0",
+                  "master": "eth1",
                   "mode": "bridge",
                   "ipam": {
                     "type": "static"
@@ -49,7 +49,7 @@ spec:
                   "name": "5g-core-macvlan",
                   "cniVersion": "0.3.1",
                   "type": "macvlan",
-                  "master": "enp8s0",
+                  "master": "eth1",
                   "mode": "bridge",
                   "ipam": {
                     "type": "static"
@@ -58,28 +58,3 @@ spec:
         remediationAction: inform
         severity: low
   remediationAction: enforce
----
-apiVersion: policy.open-cluster-management.io/v1
-kind: PlacementBinding
-metadata:
-  name: binding-network-attachment-config
-placementRef:
-  name: placement-network-attachment-config
-  kind: PlacementRule
-  apiGroup: apps.open-cluster-management.io
-subjects:
-- name: policy-network-attachment-config
-  kind: Policy
-  apiGroup: policy.open-cluster-management.io
----
-apiVersion: apps.open-cluster-management.io/v1
-kind: PlacementRule
-metadata:
-  name: placement-network-attachment-config
-spec:
-  clusterConditions:
-  - status: "True"
-    type: ManagedClusterConditionAvailable
-  clusterSelector:
-    matchExpressions:
-      - {key: type, operator: In, values: ["5gcore"]}

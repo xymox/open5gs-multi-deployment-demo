@@ -1,0 +1,66 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-nmstate-config-install
+spec:
+  disabled: false
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: policy-nmstate-config
+      spec:
+        namespaceSelector:
+          exclude:
+          - kube-*
+          include:
+          - default
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: nmstate.io/v1
+            kind: NodeNetworkConfigurationPolicy
+            metadata:
+              name: br5gcore-enp8s0-policy 
+            spec:
+              desiredState:
+                interfaces:
+                  - name: br5gcore
+                    description: Linux bridge with enp8s0 as a port 
+                    type: linux-bridge
+                    state: up
+                    bridge:
+                      options:
+                        stp:
+                          enabled: false
+                      port:
+                        - name: enp8s0
+        remediationAction: inform
+        severity: low
+  remediationAction: enforce
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-nmstate-config
+placementRef:
+  name: placement-nmstate-config
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: policy-nmstate-config-install
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-nmstate-config
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: type, operator: In, values: ["5gcore"]}

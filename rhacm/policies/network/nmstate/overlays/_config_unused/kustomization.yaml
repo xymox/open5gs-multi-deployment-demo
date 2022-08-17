@@ -1,0 +1,19 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# commonAnnotations:
+#   demo: open5gs
+
+commonLabels:
+  demo: open5gs
+
+namespace: open5gs-demo-acm
+
+bases:
+- ../operator
+
+resources:
+# - 01-deploy-nmstate-operator-policy.yaml
+# - 02-network-placement-rule.yaml
+- 03-placement-binding.yaml

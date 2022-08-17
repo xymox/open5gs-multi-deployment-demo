@@ -1,0 +1,16 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-enable-sctp-master
+  namespace: open5gs-demo-acm
+placementRef:
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+  name: placement-enable-sctp
+subjects:
+- apiGroup: policy.open-cluster-management.io
+  kind: Policy
+  name: enable-sctp-master
+- apiGroup: policy.open-cluster-management.io
+  kind: Policy
+  name: enable-sctp-worker

@@ -1,0 +1,51 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: network-attachment-config-policy
+spec:
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: network-attachment-config-policy
+      spec:
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: k8s.cni.cncf.io/v1
+            kind: NetworkAttachmentDefinition
+            metadata:
+              name: 5g-core-macvlan
+              namespace: open5gs-demo-acm-core
+            spec:
+              config: |-
+                {
+                  "name": "5g-core-macvlan",
+                  "cniVersion": "0.3.1",
+                  "type": "macvlan",
+                  "master": "enp8s0",
+                  "mode": "bridge",
+                  "ipam": {
+                    "type": "static"
+                  }
+                }
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: k8s.cni.cncf.io/v1
+            kind: NetworkAttachmentDefinition
+            metadata:
+              name: 5g-core-macvlan
+              namespace: open5gs-demo-acm-upf
+            spec:
+              config: |-
+                {
+                  "name": "5g-core-macvlan",
+                  "cniVersion": "0.3.1",
+                  "type": "macvlan",
+                  "master": "enp8s0",
+                  "mode": "bridge",
+                  "ipam": {
+                    "type": "static"
+                  }
+                }

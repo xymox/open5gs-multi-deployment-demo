@@ -1,0 +1,13 @@
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: custom-network-placement-rule
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+    - {key: type, operator: In, values: ["5gcore"]}
+    - {key: custom-network, operator: In, values: ["true", "5g"]}
