@@ -2,7 +2,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
   labels:
-    app: open5gs-demo-acm-gitops
+    app: open5gs-demo-acm
     app.kubernetes.io/part-of: open5gs-demo-acm
   annotations:
     apps.open-cluster-management.io/reconcile-rate: medium
@@ -14,7 +14,7 @@ spec:
   # hooksecretref:
   #   name: aap-cred-2
   channel: open5gs-demo-acm/open5gs-demo-acm-gitops-channel
-  name: open5gs-5gcore-gitops
+  # name: open5gs-5gcore-gitops
   placement:
     placementRef:
       kind: PlacementRule

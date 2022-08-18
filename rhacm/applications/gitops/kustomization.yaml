@@ -8,9 +8,9 @@ kind: Kustomization
 commonLabels:
   demo: open5gs
 
+bases:
+- ../base
+
 resources:
-# - namespace.yaml
-- application.yaml
 - channel.yaml
-- placementrule.yaml
 - subscription.yaml

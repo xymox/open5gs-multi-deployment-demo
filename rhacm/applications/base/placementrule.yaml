@@ -6,6 +6,15 @@ metadata:
   name: open5gs-demo-acm-placement
   namespace: open5gs-demo-acm
 spec:
+  clusterConditions:
+    - type: ManagedClusterConditionAvailable
+      status: "True"
+  #clusters:
+  #- name: cluster1
   clusterSelector:
-    matchExpressions:
-      - {key: 5g, operator: In, values: ["true", "maybe"]}
+    matchLabels:
+      usage: open5gs-demo
+  #clusterSelector:
+  #  matchExpressions:
+  #    - {key: 5g, operator: In, values: ["true", "maybe"]}
+  #clusterReplicas: 1  #Apply to how many matched clusters, default is ALL
