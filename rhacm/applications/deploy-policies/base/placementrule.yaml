@@ -9,12 +9,6 @@ spec:
   clusterConditions:
     - type: ManagedClusterConditionAvailable
       status: "True"
-  #clusters:
-  #- name: cluster1
   clusterSelector:
-    matchLabels:
-      usage: deploy-policies-demo
-  #clusterSelector:
-  #  matchExpressions:
-  #    - {key: 5g, operator: In, values: ["true", "maybe"]}
-  #clusterReplicas: 1  #Apply to how many matched clusters, default is ALL
+    matchExpressions:
+      - {key: local-cluster, operator: In, values: ["true"]}

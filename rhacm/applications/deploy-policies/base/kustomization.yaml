@@ -8,7 +8,12 @@ kind: Kustomization
 commonLabels:
   demo: open5gs
 
+namespace: deploy-policies-demo-acm
+
 resources:
 - namespace.yaml
 - application.yaml
+- channel.yaml
 - placementrule.yaml
+- subscription.yaml
+
