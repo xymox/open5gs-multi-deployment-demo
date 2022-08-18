@@ -1,0 +1,20 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  labels:
+    app: deploy-policies-demo-acm
+  name: deploy-policies-demo-acm-placement
+  namespace: deploy-policies-demo-acm
+spec:
+  clusterConditions:
+    - type: ManagedClusterConditionAvailable
+      status: "True"
+  #clusters:
+  #- name: cluster1
+  clusterSelector:
+    matchLabels:
+      usage: deploy-policies-demo
+  #clusterSelector:
+  #  matchExpressions:
+  #    - {key: 5g, operator: In, values: ["true", "maybe"]}
+  #clusterReplicas: 1  #Apply to how many matched clusters, default is ALL

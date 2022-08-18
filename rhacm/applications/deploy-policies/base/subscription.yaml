@@ -1,0 +1,21 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  labels:
+    app: deploy-policies-demo-acm
+    app.kubernetes.io/part-of: deploy-policies-demo-acm
+  annotations:
+    apps.open-cluster-management.io/reconcile-rate: medium
+    apps.open-cluster-management.io/github-path: rhacm/policies/network/nmstate
+    apps.open-cluster-management.io/github-branch: split-ns
+  name: deploy-policies-demo-acm-gitops-subscription
+  namespace: deploy-policies-demo-acm
+spec:
+  # hooksecretref:
+  #   name: aap-cred-2
+  channel: deploy-policies-demo-acm/deploy-policies-demo-acm-gitops-channel
+  # name: deploy-policies-5gcore-gitops
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: deploy-policies-demo-acm-placement
