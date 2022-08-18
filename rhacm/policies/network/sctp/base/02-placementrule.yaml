@@ -13,7 +13,7 @@ spec:
     - key: usage
       operator: In
       values:
-      - open5gs
+      - open5gs-demo
     - key: clusterType
       operator: In
       values:
@@ -33,7 +33,7 @@ spec:
     - key: usage
       operator: In
       values:
-      - open5gs
+      - open5gs-demo
     - key: clusterType
       operator: In
       values:
