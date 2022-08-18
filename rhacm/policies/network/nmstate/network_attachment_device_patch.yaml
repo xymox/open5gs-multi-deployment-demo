@@ -24,7 +24,7 @@ spec:
                   "name": "5g-core-macvlan",
                   "cniVersion": "0.3.1",
                   "type": "macvlan",
-                  "master": "enp2s0",
+                  "master": "enp7s0",
                   "mode": "bridge",
                   "ipam": {
                     "type": "static"
@@ -43,7 +43,7 @@ spec:
                   "name": "5g-core-macvlan",
                   "cniVersion": "0.3.1",
                   "type": "macvlan",
-                  "master": "enp2s0",
+                  "master": "enp7s0",
                   "mode": "bridge",
                   "ipam": {
                     "type": "static"
