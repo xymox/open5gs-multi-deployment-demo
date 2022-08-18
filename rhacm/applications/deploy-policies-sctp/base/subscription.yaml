@@ -1,0 +1,21 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  labels:
+    app: deploy-policies-sctp-demo-acm
+    app.kubernetes.io/part-of: deploy-policies-sctp-demo-acm
+  annotations:
+    apps.open-cluster-management.io/reconcile-rate: medium
+    apps.open-cluster-management.io/github-path: rhacm/policies/network/sctp
+    apps.open-cluster-management.io/github-branch: split-ns
+  name: deploy-policies-sctp-demo-acm-gitops-subscription
+  namespace: deploy-policies-sctp-demo-acm
+spec:
+  # hooksecretref:
+  #   name: aap-cred-2
+  channel: deploy-policies-sctp-demo-acm/deploy-policies-sctp-demo-acm-gitops-channel
+  # name: deploy-policies-sctp-5gcore-gitops
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: deploy-policies-sctp-demo-acm-placement

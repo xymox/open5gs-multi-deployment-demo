@@ -1,0 +1,10 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  annotations:
+    apps.open-cluster-management.io/reconcile-rate: medium
+  name: deploy-policies-sctp-demo-acm-gitops-channel
+  namespace: deploy-policies-sctp-demo-acm
+spec:
+  type: GitHub
+  pathname: https://github.com/xymox/open5gs-multi-deployment-demo.git
