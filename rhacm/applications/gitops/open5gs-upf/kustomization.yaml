@@ -8,11 +8,11 @@ kind: Kustomization
 commonLabels:
   demo: open5gs
 
-bases:
-- ../base
-- open5gs-core
-- open5gs-upf
+#bases:
+#- ../../base
 
-# resources:
+resources:
 # - channel.yaml
-# - subscription.yaml
+- subscription.yaml
+- placementrule.yaml
+

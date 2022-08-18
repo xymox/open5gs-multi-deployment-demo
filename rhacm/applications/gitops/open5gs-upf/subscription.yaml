@@ -1,0 +1,21 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  labels:
+    app: open5gs-demo-acm
+    app.kubernetes.io/part-of: open5gs-demo-acm
+  annotations:
+    apps.open-cluster-management.io/reconcile-rate: medium
+    apps.open-cluster-management.io/github-path: gitops/overlays/upf
+    apps.open-cluster-management.io/github-branch: split-ns
+  name: open5gs-demo-acm-gitops-upf-subscription
+  namespace: open5gs-demo-acm
+spec:
+  # hooksecretref:
+  #   name: aap-cred-2
+  channel: open5gs-demo-acm/open5gs-demo-acm-gitops-channel
+  # name: open5gs-5gcore-gitops
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: open5gs-demo-acm-upf-placement

@@ -1,0 +1,21 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  labels:
+    app: open5gs-demo-acm
+  name: open5gs-demo-acm-core-placement
+  namespace: open5gs-demo-acm
+spec:
+  clusterConditions:
+    - type: ManagedClusterConditionAvailable
+      status: "True"
+  #clusters:
+  #- name: cluster1
+  clusterSelector:
+    matchLabels:
+      usage: open5gs-demo
+      clusterType: standard
+  #clusterSelector:
+  #  matchExpressions:
+  #    - {key: 5g, operator: In, values: ["true", "maybe"]}
+  #clusterReplicas: 1  #Apply to how many matched clusters, default is ALL
