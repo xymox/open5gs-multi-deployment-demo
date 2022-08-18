@@ -10,6 +10,7 @@ spec:
   clusterSelector:
     matchLabels:
       usage: open5gs-demo
+      clusterType: sno
     # matchExpressions:
     # - {key: type, operator: In, values: ["5gcore"]}
     # - {key: custom-network, operator: In, values: ["true", "5g"]}
