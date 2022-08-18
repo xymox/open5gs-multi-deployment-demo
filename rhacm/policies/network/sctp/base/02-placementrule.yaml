@@ -29,6 +29,7 @@ spec:
   - status: "True"
     type: ManagedClusterConditionAvailable
   clusterSelector:
+    matchExpressions:
     - key: usage
       operator: In
       values:
