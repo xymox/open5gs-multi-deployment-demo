@@ -16,7 +16,8 @@ data:
            dev: net1
         gtpu:
            dev: eth0
-           advertise: upf-gtpu-open5gs.open5gs-demo-acm-upf.svc.cluster.local
+           # advertise: upf-gtpu-open5gs.open5gs-demo-acm-upf.svc.cluster.local
+           advertise: upf-gtpu-open5gs.apps.ocp-sno-bm-08.clustership.com
            port: 2152
         subnet:
           - addr: 10.45.0.1/16

@@ -38,7 +38,7 @@ spec:
         k8s.v1.cni.cncf.io/networks: '[
           {
             "name": "5g-core-macvlan",
-            "ips": [ "192.168.199.10/30" ]
+            "ips": [ "192.168.199.5/29" ]
           }
         ]'
       labels:
