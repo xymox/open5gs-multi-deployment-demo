@@ -14,7 +14,7 @@ spec:
   clusterSelector:
     matchLabels:
       usage: open5gs-demo
-      role: upf
+      5grole: upf
       clusterType: sno
   #clusterSelector:
   #  matchExpressions:
