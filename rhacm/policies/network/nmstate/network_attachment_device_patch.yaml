@@ -16,14 +16,14 @@ spec:
             apiVersion: k8s.cni.cncf.io/v1
             kind: NetworkAttachmentDefinition
             metadata:
-              name: 5g-core-macvlan
+              name: 5g-core-n4
               namespace: open5gs-demo-acm-core
             spec:
               config: |-
                 {
-                  "name": "5g-core-macvlan",
+                  "name": "5g-core-n4",
                   "cniVersion": "0.3.1",
-                  "type": "macvlan",
+                  "type": "n4",
                   "master": "enp7s0",
                   "mode": "bridge",
                   "ipam": {
@@ -35,14 +35,14 @@ spec:
             apiVersion: k8s.cni.cncf.io/v1
             kind: NetworkAttachmentDefinition
             metadata:
-              name: 5g-core-macvlan
+              name: 5g-core-n4
               namespace: open5gs-demo-acm-upf
             spec:
               config: |-
                 {
-                  "name": "5g-core-macvlan",
+                  "name": "5g-core-n4",
                   "cniVersion": "0.3.1",
-                  "type": "macvlan",
+                  "type": "n4",
                   "master": "enp7s0",
                   "mode": "bridge",
                   "ipam": {
