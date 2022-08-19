@@ -11,7 +11,7 @@ spec:
     matchLabels:
       usage: open5gs-demo
       clusterType: standard
-      cloud=Amazon
+      cloud: Amazon
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
