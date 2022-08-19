@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: network-attachment-config-policy
+  name: network-attachment-config-policy-aws
 spec:
   disabled: false
   policy-templates:
@@ -9,7 +9,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: network-attachment-config-policy
+        name: network-attachment-config-policy-aws
       spec:
         namespaceSelector:
           exclude:
@@ -29,12 +29,8 @@ spec:
                 {
                   "name": "5g-core-n4",
                   "cniVersion": "0.3.1",
-                  "type": "macvlan",
-                  "master": "eth1",
-                  "mode": "bridge",
-                  "ipam": {
-                    "type": "static"
-                  }
+                  "type": "bridge",
+                  "ipam": {}
                 }
         - complianceType: musthave
           objectDefinition:
@@ -48,12 +44,8 @@ spec:
                 {
                   "name": "5g-core-n4",
                   "cniVersion": "0.3.1",
-                  "type": "macvlan",
-                  "master": "eth1",
-                  "mode": "bridge",
-                  "ipam": {
-                    "type": "static"
-                  }
+                  "type": "bridge",
+                  "ipam": {}
                 }
         remediationAction: inform
         severity: low

@@ -2,6 +2,20 @@
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
+  name: custom-network-placement-rule-aws
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchLabels:
+      usage: open5gs-demo
+      clusterType: standard
+      cloud=Amazon
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
   name: custom-network-placement-rule
 spec:
   clusterConditions:

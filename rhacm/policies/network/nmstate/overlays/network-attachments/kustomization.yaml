@@ -13,5 +13,6 @@ bases:
 
 resources:
 - 01-network-attachment-policies.yaml
+- 02-network-attachment-policies.yaml
 # - 02-network-placement-rule.yaml
 - 03-placement-binding.yaml

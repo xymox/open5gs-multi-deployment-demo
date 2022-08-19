@@ -11,3 +11,16 @@ subjects:
 - name: network-attachment-config-policy
   kind: Policy
   apiGroup: policy.open-cluster-management.io
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: network-attachement-config-placement-binding-aws
+placementRef:
+  name: custom-network-placement-rule-aws
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: network-attachment-config-policy-aws
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io
