@@ -32,21 +32,6 @@ spec:
                   "type": "bridge",
                   "ipam": {}
                 }
-        - complianceType: musthave
-          objectDefinition:
-            apiVersion: k8s.cni.cncf.io/v1
-            kind: NetworkAttachmentDefinition
-            metadata:
-              name: 5g-core-n4
-              namespace: open5gs-demo-acm-upf
-            spec:
-              config: |-
-                {
-                  "name": "5g-core-n4",
-                  "cniVersion": "0.3.1",
-                  "type": "bridge",
-                  "ipam": {}
-                }
         remediationAction: inform
         severity: low
   remediationAction: enforce
