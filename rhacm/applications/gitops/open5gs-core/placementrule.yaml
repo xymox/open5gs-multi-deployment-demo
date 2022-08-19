@@ -14,6 +14,7 @@ spec:
   clusterSelector:
     matchLabels:
       usage: open5gs-demo
+      5grole: core
       clusterType: standard
   #clusterSelector:
   #  matchExpressions:
