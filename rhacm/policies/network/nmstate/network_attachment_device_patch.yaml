@@ -23,7 +23,7 @@ spec:
                 {
                   "name": "5g-core-n4",
                   "cniVersion": "0.3.1",
-                  "type": "n4",
+                  "type": "macvlan",
                   "master": "enp7s0",
                   "mode": "bridge",
                   "ipam": {
@@ -42,7 +42,7 @@ spec:
                 {
                   "name": "5g-core-n4",
                   "cniVersion": "0.3.1",
-                  "type": "n4",
+                  "type": "macvlan",
                   "master": "enp7s0",
                   "mode": "bridge",
                   "ipam": {
