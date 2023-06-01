@@ -1,0 +1,27 @@
+  additionalNetworks:
+  - name: 5g-net-bridge
+    namespace: open5gs-demo-acm
+    rawCNIConfig: |-
+      {
+        "name": "5g-net-bridge",
+        "cniVersion": "0.3.1",
+        "type": "bridge",
+        "ipam": {
+          "type": "static"
+        }
+      }
+    type: Raw
+  - name: 5g-net-macvlan
+    namespace: open5gs-demo-acm
+    rawCNIConfig: |-
+      {
+        "name": "5g-net-macvlan",
+        "cniVersion": "0.3.1",
+        "type": "macvlan",
+        "master": "enp8s0",
+        "mode": "bridge",
+        "ipam": {
+          "type": "static"
+        }
+      }
+    type: Raw

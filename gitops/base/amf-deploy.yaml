@@ -1,0 +1,79 @@
+---
+# Source: open5gs-5gcore-helm/templates/amf-deploy.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: amf-open5gs-sctp
+  labels:
+    epc-mode: amf
+spec:
+  type: NodePort
+  selector:
+    epc-mode: amf
+  ports:
+    - protocol: SCTP
+      port: 38412
+      targetPort: 38412
+      nodePort: 30412
+---
+# Source: open5gs-5gcore-helm/templates/amf-deploy.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: open5gs-amf
+  labels:
+    epc-mode: amf
+spec:
+  selector:
+    epc-mode: amf
+  ports:
+    - protocol: TCP
+      port: 8099
+      targetPort: http2
+---
+# Source: open5gs-5gcore-helm/templates/amf-deploy.yaml
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: open5gs-amf-deployment
+  labels:
+    epc-mode: amf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      epc-mode: amf
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        epc-mode: amf
+    spec:    
+      # nodeSelector:
+      #   node-role.kubernetes.io/worker: '' 
+      serviceAccountName: 5gcore
+      containers:
+        - name: amf
+          image: "quay.io/xymox/open5gs-ubi8:latest"
+          imagePullPolicy: Always
+          command:
+          - /bin/sh
+          - -c
+          - cat /open5gs/config-map/amf.yaml | sed -e "s/0\.0\.0\.0/${POD_IP}/" > /tmp/amf.yaml ; open5gs-amfd -c /tmp/amf.yaml
+          volumeMounts:
+          - name: open5gs-amf-config
+            mountPath: /open5gs/config-map/amf.yaml
+            subPath: "amf.yaml"
+          ports:
+          - containerPort: 8099
+            name: http2
+          env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+      volumes:
+        - name: open5gs-amf-config
+          configMap:
+            name: open5gs-amf-config

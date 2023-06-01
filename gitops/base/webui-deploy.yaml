@@ -1,0 +1,51 @@
+---
+# Source: open5gs-5gcore-helm/templates/webui-deploy.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: open5gs-webui
+  labels:
+    epc-mode: webui
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    epc-mode: webui
+---
+# Source: open5gs-5gcore-helm/templates/webui-deploy.yaml
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: open5gs-webui 
+  labels:
+    epc-mode: webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      epc-mode: webui
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        epc-mode: webui
+    spec:    
+      serviceAccountName: 5gcore
+      containers:
+      - name: webui
+        imagePullPolicy: Always
+        image: "quay.io/xymox/open5gs-webui-ubi8:v2.4.5"      
+        env:
+        - name: DB_URI
+          value: mongodb://admin:mongo@mongodb-svc/admin
+        - name: NODE_ENV
+          value: "production"  
+        - name: HOSTNAME
+          value: '0.0.0.0'
+        - name: ADMIN_USER
+          value: phuet
+        - name: ADMIN_PASSWORD
+          value: bobleponge

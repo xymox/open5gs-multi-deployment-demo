@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: multi-net-1
+  name: multi-net-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multi-net-1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: multi-net-1
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          {
+            "name": "5g-core-bridge",
+            "namespace": "open5gs-demo-acm",
+            "ips": [ "192.168.199.9/30" ]
+          }
+        ]'
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - sleep INF
+        image: quay.io/xymox/ubi8-debug-toolkit:latest
+        name: ubi8-debug-toolkit
+        resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: multi-net-2
+  name: multi-net-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multi-net-2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: multi-net-2
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          {
+            "name": "5g-core-bridge",
+            "namespace": "open5gs-demo-acm",
+            "ips": [ "192.168.199.10/30" ]
+          }
+        ]'
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - sleep INF
+        image: quay.io/xymox/ubi8-debug-toolkit:latest
+        name: ubi8-debug-toolkit
+        resources: {}
+status: {}

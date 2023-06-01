@@ -9,7 +9,8 @@ commonLabels:
   demo: open5gs
 
 resources:
-- namespace.yaml
+# - namespace.yaml
 - application.yaml
 - channel.yaml
-# - placementrule.yaml
+- placementrule.yaml
+- subscription.yaml

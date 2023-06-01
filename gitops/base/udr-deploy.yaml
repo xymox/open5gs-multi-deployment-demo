@@ -1,0 +1,97 @@
+---
+# Source: open5gs-5gcore-helm/templates/udr-deploy.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: open5gs-udr
+  labels:
+    epc-mode: udr
+spec:
+  selector:
+    epc-mode: udr
+  ports:
+    - protocol: TCP
+      port: 8099
+      targetPort: http2
+---
+# Source: open5gs-5gcore-helm/templates/udr-deploy.yaml
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: open5gs-udr-deployment
+  labels:
+    epc-mode: udr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      epc-mode: udr
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        epc-mode: udr
+    spec:   
+      serviceAccountName: 5gcore
+      initContainers:
+      - args:
+        - sh
+        - -c
+        - cat /initconfig/udr.yaml | envsubst > /config/udr.yaml
+        image: quay.io/xymox/envsubst:ubi
+        name: envsubst
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: MONGODB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: dbname
+        - name: MONGODB_ADMIN_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: admin-username
+        - name: MONGODB_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: admin-password
+        - name: MONGODB_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: username
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: password
+        volumeMounts:
+        - name: open5gs-udr-initconfig
+          mountPath: /initconfig/udr.yaml
+          subPath: "udr.yaml"          
+        - name: open5gs-udr-config
+          mountPath: /config
+      containers:
+        - name: udr
+          image: "quay.io/xymox/open5gs-ubi8:latest"
+          imagePullPolicy: Always
+          command: ["open5gs-udrd", "-c", "/open5gs/config-map/udr.yaml"]
+          volumeMounts:
+          - name: open5gs-udr-config
+            mountPath: /open5gs/config-map/udr.yaml
+            subPath: "udr.yaml"          
+          ports:
+          - containerPort: 8099
+            name: http2
+      volumes:
+        - name: open5gs-udr-config
+          emptyDir: {}
+        - name: open5gs-udr-initconfig
+          configMap:
+            name: open5gs-udr-config

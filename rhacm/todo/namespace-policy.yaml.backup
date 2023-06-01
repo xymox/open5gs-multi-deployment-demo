@@ -1,0 +1,89 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: open5gs-demo-acm-namespace-policy
+  annotations:
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: open5gs-demo-acm-namespace-configuration-policy
+        spec:
+          remediationAction: enforce
+          severity: low
+          namespaceSelector:
+            exclude: ["kube-*"]
+            include: ["default"]
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                kind: Namespace
+                apiVersion: v1
+                metadata:
+                  name: open5gs-demo-acm
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: open5gs-demo-acm-sa-configuration-policy
+        spec:
+          remediationAction: enforce
+          severity: low
+          namespaceSelector:
+            exclude: ["kube-*"]
+            include: ["default"]
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                kind: ServiceAccount
+                apiVersion: v1
+                metadata:
+                  name: 5gcore
+                  namespace: open5gs-demo-acm
+---
+apiVersion: policy.open-cluster-management.io/v1beta1
+kind: PolicyAutomation
+metadata:
+  name: enforce-sa-account
+spec:
+  automationDef:
+    extra_vars:
+      app_namespace: open5gs-demo-acm
+      service_account: 5gcore
+    name: Update open5gs deployment
+    secret: aap-cred-2
+    type: AnsibleJob
+  mode: disabled
+  policyRef: open5gs-demo-acm-namespace-policy
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: open5gs-demo-acm-namespace-policy-placementbinding
+placementRef:
+  name: open5gs-demo-acm-namespace-policy-placementrule
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: open5gs-demo-acm-namespace-policy
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: open5gs-demo-acm-namespace-policy-placementrule
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: 5g, operator: In, values: ["true", "maybe"]}

@@ -12,4 +12,5 @@ resources:
 - namespace.yaml
 - application.yaml
 - channel.yaml
-# - placementrule.yaml
+- placementrule.yaml
+- subscription.yaml

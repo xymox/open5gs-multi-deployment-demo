@@ -1,0 +1,21 @@
+---
+# Source: open5gs-5gcore-helm/templates/ausf-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: open5gs-ausf-config
+  labels:
+    epc-mode: ausf
+data:
+  ausf.yaml: |
+    logger:
+      level: info
+
+    ausf:
+      sbi:
+      - dev: eth0
+        port: 8099
+    nrf:
+     sbi:
+      name: open5gs-nrf
+      port: 8099

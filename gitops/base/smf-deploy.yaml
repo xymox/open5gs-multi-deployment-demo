@@ -1,0 +1,60 @@
+---
+# Source: open5gs-5gcore-helm/templates/smf-deploy.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: open5gs-smf
+  labels:
+    epc-mode: smf
+spec:
+  selector:
+    epc-mode: smf
+  ports:
+    - protocol: TCP
+      port: 8099
+      targetPort: http2
+---
+# Source: open5gs-5gcore-helm/templates/smf-deploy.yaml
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: open5gs-smf-deployment
+  labels:
+    epc-mode: smf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      epc-mode: smf
+  template:
+    metadata:       
+      annotations:
+        sidecar.istio.io/inject: "true"
+        k8s.v1.cni.cncf.io/networks: '[
+          {
+            "name": "5g-core-macvlan",
+            "ips": [ "192.168.199.9/30" ]
+          }
+        ]'
+      labels:
+        epc-mode: smf
+    spec:   
+      serviceAccountName: 5gcore
+      containers:
+      - name: smf
+        image: "quay.io/xymox/open5gs-ubi8:latest"
+        imagePullPolicy: Always
+        command: ["/bin/sh", "-c"]
+        args:
+        - open5gs-smfd -c /open5gs/config-map/smf.yaml;
+        volumeMounts:
+          - name: open5gs-smf-config
+            mountPath: /open5gs/config-map/smf.yaml
+            subPath: "smf.yaml"                                       
+        ports:
+        - containerPort: 8099
+          name: http2
+      volumes:
+        - name: open5gs-smf-config
+          configMap:
+            name: open5gs-smf-config

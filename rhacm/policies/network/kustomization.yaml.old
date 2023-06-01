@@ -10,6 +10,7 @@ commonLabels:
 
 resources:
 - namespace.yaml
-- application.yaml
-- channel.yaml
-# - placementrule.yaml
+- enable-sctp-master-policy.yaml
+- enable-sctp-worker-policy.yaml
+- enable-sctp-placementbinding.yaml
+- enable-sctp-placementrule.yaml

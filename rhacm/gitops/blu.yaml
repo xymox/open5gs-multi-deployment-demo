@@ -1,0 +1,13 @@
+apiVersion: view.open-cluster-management.io/v1beta1
+kind: ManagedClusterView
+metadata:
+  name: getappsubstatus
+  namespace: ie-sno-01
+spec:
+  scope:
+    apiGroup: apps.open-cluster-management.io
+    kind: SubscriptionStatus
+    version: v1alpha1
+    resource: subscriptionstatuses
+    name: open5gs-demo-acm-gitops-subscription
+    namespace: open5gs-demo-acm
